@@ -26,7 +26,7 @@ class TransactionCard extends StatelessWidget {
               decoration: InputDecoration(labelText: "Price"),
             ),
             TextButton(
-                onPressed: (_addTx(_titleTextHandler.text,  double.parse(_amountTextHandler.text))) ,
+                onPressed:() => _addTx(_titleTextHandler.text,  double.parse(_amountTextHandler.text)) ,
                 child: Text("Enter New"),
                 style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all(Colors.yellow))),

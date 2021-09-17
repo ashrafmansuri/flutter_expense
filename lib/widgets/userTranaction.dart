@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import './transactionCard.dart';
@@ -29,7 +28,10 @@ class _UserTransactionState extends State<UserTransaction> {
   void addTxToList(String item,double price)
   {
     var tx = Transaction(id: DateTime.now().toString(), title: item, amount: price, date: DateTime.now());
-    _transactions.add(tx);
+    setState(() {
+            _transactions.add(tx);
+        });
+  
   }
   @override
   Widget build(BuildContext context) {
