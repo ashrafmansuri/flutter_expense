@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import '../models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   final _titleTextHandler = TextEditingController();
