@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import './transactionCard.dart';
 import './transactionList.dart';
@@ -25,22 +24,23 @@ class _UserTransactionState extends State<UserTransaction> {
     ),
   ];
 
-  void addTxToList(String item,double price)
-  {
-    var tx = Transaction(id: DateTime.now().toString(), title: item, amount: price, date: DateTime.now());
+  void addTxToList(String item, double price) {
+    var tx = Transaction(
+        id: DateTime.now().toString(),
+        title: item,
+        amount: price,
+        date: DateTime.now());
     setState(() {
-            _transactions.add(tx);
-        });
-  
+      _transactions.add(tx);
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TransactionCard(addTxToList),
-        TransactionList(
-          transactions: _transactions,
-        )
+        TransactionList(transactions: _transactions,)
       ],
     );
   }
