@@ -11,9 +11,10 @@ class ChartBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            child: Text(
+          FittedBox(
+           child: Text(
               "\$${_sumDay.toStringAsFixed(2)}",
               style: TextStyle(color: Colors.grey),
             ),
@@ -23,6 +24,7 @@ class ChartBar extends StatelessWidget {
             height: 60,
             width: 10,
             child: Stack(
+              alignment: AlignmentDirectional.bottomEnd ,
               children: [
                 Container(
                   decoration: BoxDecoration(
