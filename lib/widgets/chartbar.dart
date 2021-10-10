@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 
-class chartBar extends StatelessWidget {
+class ChartBar extends StatelessWidget {
   final String _day;
   final double _sumDay;
   final double _pcTotal;
 
-
-  chartBar(this._day,this._sumDay,this._pcTotal);
+  ChartBar(this._day, this._sumDay, this._pcTotal);
 
   @override
   Widget build(BuildContext context) {
@@ -16,38 +14,39 @@ class chartBar extends StatelessWidget {
         children: [
           Container(
             child: Text(
-              _sumDay.toString(),
+              "\$${_sumDay.toStringAsFixed(2)}",
               style: TextStyle(color: Colors.grey),
             ),
           ),
-          SizedBox(height:4),
+          SizedBox(height: 4),
           Container(
             height: 60,
             width: 10,
-            child: Stack(children: [
-              Container(decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all( width: 1,color: Colors.grey
-                
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(width: 1, color: Colors.grey)),
+                ),
+                FractionallySizedBox(
+                  heightFactor: _pcTotal,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Theme.of(context).primaryColor,
+                        border: Border.all(width: 1, color: Colors.grey)),
+                  ),
                 )
-              ),
-                
-
-              ),
-              FractionallySizedBox(
-
-                heightFactor: 0.5,
-                child: Container(decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                
-                color: Theme.of(context).primaryColor,
-                border: Border.all( width: 1,color: Colors.grey)
-              ),
-                
-
-              ),
-              )
-            ],),
+              ],
+            ),
+          ),
+          SizedBox(height: 5,),
+          Container(
+            child: Text(
+              _day.toString(),
+              style: TextStyle(color: Colors.grey),
+            ),
           )
         ],
       ),

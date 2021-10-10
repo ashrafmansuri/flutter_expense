@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
       id: 't2',
       title: 'Weekly Groceries',
       amount: 16.53,
-      date: DateTime.now(),
+      date: DateTime.parse("2021-10-09"),
     ),
   ];
 

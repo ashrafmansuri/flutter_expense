@@ -25,20 +25,27 @@ List<Map<String,Object>> get tx {
     return {'day' : DateFormat.E().format(weekDay) ,'sumDay':sumDay};
   });
 }
+
+
+double get totalSum{
+  return recTx.fold(0.0, (sum, index) {
+    return sum = sum + index.amount;
+  });
+}
   @override
   Widget build(BuildContext context) {
     print(tx);
     return Container(
       child:Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(4.0),
         child: Card(
           elevation: 5,
                 child: Padding(
-                  padding: const EdgeInsets.all(5.0),
+                  padding: const EdgeInsets.all(10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:tx.map((e) {
-                    return chartBar(e['day'], e['sumDay'], e['sumDay']);
+                    return ChartBar(e['day'], e['sumDay'], (e['sumDay'] as double) / totalSum);
                   }).toList(),),
                 ),),
       ),
