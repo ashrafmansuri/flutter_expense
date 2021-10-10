@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './widgets/chart.dart';
 import './widgets/transactionList.dart';
 import './models/transaction.dart';
 import './widgets/transactionCard.dart';
@@ -27,18 +28,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   amount: 69.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'Weekly Groceries',
-    //   amount: 16.53,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'Weekly Groceries',
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
   ];
 
   void addTxToList(String item, double price) {
@@ -61,6 +62,10 @@ class _MyHomePageState extends State<MyHomePage> {
         });
   }
 
+List<Transaction> get recTx {
+  return _transactions.where((element) => element.date.isAfter(DateTime.now().subtract(Duration(days:7)) )).toList();
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,11 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Container(
                 width: double.infinity,
-                child: Card(
-                  color: Colors.blue,
-                  child: Text('CHART!'),
-                  elevation: 5,
-                ),
+                child: Chart(recTx),
+                
               ),
               TransactionList(transactions: _transactions)
             ],
