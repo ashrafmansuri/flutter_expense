@@ -42,12 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
-  void addTxToList(String item, double price) {
+  void addTxToList(String item, double price,DateTime selectedDate) {
     var tx = Transaction(
         id: DateTime.now().toString(),
         title: item,
         amount: price,
-        date: DateTime.now());
+        date: selectedDate);
     setState(() {
       _transactions.add(tx);
     });
@@ -80,7 +80,6 @@ List<Transaction> get recTx {
         height: 500,
         child: SingleChildScrollView(
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(

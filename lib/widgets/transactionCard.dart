@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionCard extends StatefulWidget {
   final Function _addTx;
@@ -11,18 +12,34 @@ class TransactionCard extends StatefulWidget {
 
 class _TransactionCardState extends State<TransactionCard> {
   final _titleTextHandler = TextEditingController();
-
   final _amountTextHandler = TextEditingController();
+  DateTime _selectedDate;
 
   void _sumbitData() {
     if (_titleTextHandler.text.isEmpty ||
-        double.parse(_amountTextHandler.text) <= 0) {
+        double.parse(_amountTextHandler.text) <= 0 || _selectedDate == null) {
       return;
     }
     widget._addTx(
-        _titleTextHandler.text, double.parse(_amountTextHandler.text));
+        _titleTextHandler.text, double.parse(_amountTextHandler.text), _selectedDate);
 
     Navigator.of(context).pop();
+  }
+
+  void _datePickShow() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021),
+            lastDate: DateTime.now())
+        .then((returnedDate) {
+      if (returnedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = returnedDate;
+      });
+    });
   }
 
   @override
@@ -46,6 +63,20 @@ class _TransactionCardState extends State<TransactionCard> {
                 onSubmitted: (val) {
                   _sumbitData();
                 }),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child: Text(_selectedDate == null
+                          ? "No date selected 😂"
+                          : DateFormat.yMd().format(_selectedDate))),
+                  TextButton(
+                      onPressed: _datePickShow, child: Text("Select Date"))
+                ],
+              ),
+            ),
             TextButton(
                 onPressed: _sumbitData,
                 child: Text("Enter New"),
