@@ -1,4 +1,4 @@
-# flutter_assignment
+# expenseapp
 
 A new Flutter project.
 

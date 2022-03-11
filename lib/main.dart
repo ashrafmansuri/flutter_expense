@@ -11,10 +11,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.yellow,
-        fontFamily: "OpenSans"
-      ),
+          primarySwatch: Colors.purple,
+          accentColor: Colors.yellow,
+          fontFamily: "OpenSans"),
       title: 'Expense Calculator',
       home: MyHomePage(),
     );
@@ -27,22 +26,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.parse("2021-10-09"),
-    ),
-  ];
+  final List<Transaction> _transactions = [];
 
-  void addTxToList(String item, double price,DateTime selectedDate) {
+  void addTxToList(String item, double price, DateTime selectedDate) {
     var tx = Transaction(
         id: DateTime.now().toString(),
         title: item,
@@ -53,41 +39,56 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
- 
   void _openModal(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
         builder: (bCtx) {
-          return  TransactionCard(addTxToList);
+          return TransactionCard(addTxToList);
         });
   }
 
-List<Transaction> get recTx {
-  return _transactions.where((element) => element.date.isAfter(DateTime.now().subtract(Duration(days:7)) )).toList();
-}
+  List<Transaction> get recTx {
+    return _transactions
+        .where((element) =>
+            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Flutter App',style: TextStyle(fontWeight:FontWeight.bold  ),),
-        actions: [
-          IconButton(
-              onPressed: () => _openModal(context), icon: Icon(Icons.add))
-        ],
+    final appbar = AppBar(
+      title: Text(
+        'Flutter App',
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
+      actions: [
+        IconButton(onPressed: () => _openModal(context), icon: Icon(Icons.add))
+      ],
+    );
+
+    return Scaffold(
+      appBar: appbar,
       body: Container(
-        height: 500,
+        height: 700,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
+                height: (MediaQuery.of(context).size.height -
+                        appbar.preferredSize.height -
+                        MediaQuery.of(context).viewPadding.top) *
+                    0.25,
                 width: double.infinity,
                 child: Chart(recTx),
-                
               ),
-              TransactionList(transactions: _transactions)
+              TransactionList(
+                transactions: _transactions,
+                heightFactor: (MediaQuery.of(context).size.height -
+                        appbar.preferredSize.height -
+                        MediaQuery.of(context).viewPadding.top) *
+                    0.75,
+              )
             ],
           ),
         ),

@@ -4,12 +4,13 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
-  TransactionList({this.transactions});
+  final heightFactor;
+  TransactionList({this.transactions, this.heightFactor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 600,
+        height: heightFactor,
         child: transactions.isEmpty
             ? Container(
                 child: Column(
@@ -32,29 +33,27 @@ class TransactionList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Card(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(vertical:5,horizontal: 2),
-                    child: ListTile(
+                      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
+                      child: ListTile(
                         leading: CircleAvatar(
                           radius: 30,
                           child: Text(
                             "\$${transactions[index].amount.toStringAsFixed(2)}",
-                          
                           ),
-                        ) ,
+                        ),
                         title: Text(
-                              transactions[index].title,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 15),
-                            ),
-                            subtitle:Text(
-                              DateFormat.yMd().format(transactions[index].date),
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 12),
-                             ) ,
+                          transactions[index].title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 15),
+                        ),
+                        subtitle: Text(
+                          DateFormat.yMd().format(transactions[index].date),
+                          style: TextStyle(color: Colors.grey, fontSize: 12),
+                        ),
                       ),
                     ),
-                  ) ;
-                  
+                  );
+
                   /*Card(
                     child: Row(
                       children: <Widget>[

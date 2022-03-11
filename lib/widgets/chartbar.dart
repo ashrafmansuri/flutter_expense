@@ -14,40 +14,45 @@ class ChartBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           FittedBox(
-           child: Text(
+            child: Text(
               "\$${_sumDay.toStringAsFixed(2)}",
-              style: TextStyle(color: Colors.grey),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           ),
           SizedBox(height: 4),
           Container(
-            height: 60,
-            width: 10,
+            height: 90,
+            width: 15,
             child: Stack(
-              alignment: AlignmentDirectional.bottomEnd ,
+              alignment: AlignmentDirectional.bottomEnd,
               children: [
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(width: 1, color: Colors.grey)),
+                      border: Border.all(width: 2, color: Colors.black)),
                 ),
-                FractionallySizedBox(
-                  heightFactor: _pcTotal,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor,
-                        border: Border.all(width: 1, color: Colors.grey)),
-                  ),
-                )
+                if (!_pcTotal.isNaN)
+                  FractionallySizedBox(
+                    heightFactor: _pcTotal,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Theme.of(context).primaryColor,
+                          border: Border.all(width: 1, color: Colors.grey)),
+                    ),
+                  )
               ],
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Container(
             child: Text(
               _day.toString(),
-              style: TextStyle(color: Colors.grey),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
             ),
           )
         ],
