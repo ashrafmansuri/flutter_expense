@@ -16,7 +16,7 @@ class Chart extends StatelessWidget {
         if (recTx[i].date.day == weekDay.day &&
             recTx[i].date.month == weekDay.month &&
             recTx[i].date.year == weekDay.year) {
-          sumDay = sumDay + recTx[i].amount;
+          sumDay += recTx[i].amount;
         }
       }
       return {'day': DateFormat.E().format(weekDay), 'sumDay': sumDay};
@@ -24,8 +24,8 @@ class Chart extends StatelessWidget {
   }
 
   double get totalSum {
-    return recTx.fold(0.0, (sum, index) {
-      return sum = sum + index.amount;
+    return tx.fold(0.0, (sum, item) {
+      return sum + item['sumDay'];
     });
   }
 
@@ -43,9 +43,14 @@ class Chart extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: tx.map((e) {
                 return Flexible(
-                    fit: FlexFit.tight,
-                    child: ChartBar(e['day'], e['sumDay'],
-                        (e['sumDay'] as double) / totalSum));
+                  fit: FlexFit.tight,
+                  child: ChartBar(
+                      e['day'],
+                      e['sumDay'],
+                      totalSum == 0.0
+                          ? 0.0
+                          : (e['sumDay'] as double) / totalSum),
+                );
               }).toList(),
             ),
           ),

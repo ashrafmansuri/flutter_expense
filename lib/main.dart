@@ -48,10 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Transaction> get recTx {
-    return _transactions
-        .where((element) =>
-            element.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
-        .toList();
+    return _transactions.where((element) {
+      return element.date.isAfter(
+        DateTime.now().subtract(Duration(days: 7)),
+      );
+    }).toList();
   }
 
   @override
