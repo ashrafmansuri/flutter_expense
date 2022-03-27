@@ -9,53 +9,61 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          FittedBox(
-            child: Text(
-              "\$${_sumDay.toStringAsFixed(2)}",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            ),
-          ),
-          SizedBox(height: 4),
-          Container(
-            height: 80,
-            width: 15,
-            child: Stack(
-              alignment: AlignmentDirectional.bottomEnd,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(width: 2, color: Colors.black)),
+    return LayoutBuilder(builder: ((context, constraints) {
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text(
+                  "\$${_sumDay.toStringAsFixed(2)}",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
-                FractionallySizedBox(
-                  heightFactor: _pcTotal,
-                  child: Container(
+              ),
+            ),
+            SizedBox(height: 4),
+            Container(
+              height: constraints.maxHeight * 0.5,
+              width: 15,
+              child: Stack(
+                alignment: AlignmentDirectional.bottomEnd,
+                children: [
+                  Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).primaryColor,
-                        border: Border.all(width: 1, color: Colors.grey)),
+                        border: Border.all(width: 2, color: Colors.black)),
                   ),
-                )
-              ],
+                  FractionallySizedBox(
+                    heightFactor: _pcTotal,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Theme.of(context).primaryColor,
+                          border: Border.all(width: 1, color: Colors.grey)),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            child: Text(
-              _day.toString(),
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            SizedBox(
+              height: constraints.maxHeight * 0.05,
             ),
-          )
-        ],
-      ),
-    );
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text(
+                  _day.toString(),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+              ),
+            )
+          ],
+        ),
+      );
+    }));
   }
 }

@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [];
+  bool _showChart = false;
 
   void addTxToList(String item, double price, DateTime selectedDate) {
     var tx = Transaction(
@@ -36,6 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
         date: selectedDate);
     setState(() {
       _transactions.add(tx);
+    });
+  }
+
+  void _deleteTransction(String id) {
+    setState(() {
+      _transactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -69,22 +76,32 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: appbar,
-      body: Container(
-        height: 700,
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Container(
+          height: 700,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appbar.preferredSize.height -
-                        MediaQuery.of(context).viewPadding.top) *
-                    0.25,
-                width: double.infinity,
-                child: Chart(recTx),
+              Switch(
+                value: _showChart,
+                onChanged: (val) {
+                  setState(() {
+                    _showChart = val;
+                  });
+                },
               ),
+              if (_showChart == true)
+                Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appbar.preferredSize.height -
+                          MediaQuery.of(context).viewPadding.top) *
+                      0.25,
+                  width: double.infinity,
+                  child: Chart(recTx),
+                ),
               TransactionList(
                 transactions: _transactions,
+                deleteTx: _deleteTransction,
                 heightFactor: (MediaQuery.of(context).size.height -
                         appbar.preferredSize.height -
                         MediaQuery.of(context).viewPadding.top) *

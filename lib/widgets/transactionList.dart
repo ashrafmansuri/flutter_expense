@@ -4,8 +4,9 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTx;
   final heightFactor;
-  TransactionList({this.transactions, this.heightFactor});
+  TransactionList({this.transactions, this.deleteTx, this.heightFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class TransactionList extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     Container(
-                        height: 400,
+                        height: 300,
                         child: Image(
                           fit: BoxFit.cover,
                           image: AssetImage("assets/images/waiting.png"),
@@ -35,22 +36,28 @@ class TransactionList extends StatelessWidget {
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 5, horizontal: 2),
                       child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          child: Text(
-                            "\$${transactions[index].amount.toStringAsFixed(2)}",
+                          leading: CircleAvatar(
+                            radius: 30,
+                            child: Text(
+                              "\$${transactions[index].amount.toStringAsFixed(2)}",
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          transactions[index].title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15),
-                        ),
-                        subtitle: Text(
-                          DateFormat.yMd().format(transactions[index].date),
-                          style: TextStyle(color: Colors.grey, fontSize: 12),
-                        ),
-                      ),
+                          title: Text(
+                            transactions[index].title,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          subtitle: Text(
+                            DateFormat.yMd().format(transactions[index].date),
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            color: Theme.of(context).errorColor,
+                            onPressed: () {
+                              deleteTx(transactions[index].id);
+                            },
+                          )),
                     ),
                   );
 
